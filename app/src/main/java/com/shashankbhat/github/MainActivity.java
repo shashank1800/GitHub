@@ -35,6 +35,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.shashankbhat.github.Adapter.RepoAdapter;
+import com.shashankbhat.github.AsyncTasks.NavGraphAsyncTask;
 import com.shashankbhat.github.AsyncTasks.NavHeaderAsyncTask;
 import com.shashankbhat.github.AsyncTasks.RepoAsyncTask;
 import com.shashankbhat.github.Objects.RepositoryProject;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static Context context;
     public static RepoAdapter repoAdapter;
     public static ArrayList<RepositoryProject> repositoryProjectsObjects;
+    public static ImageView graphView ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         headerView = navigationView.getHeaderView(0);
         mAvatar = headerView.findViewById(R.id.avatar);
+        graphView = headerView.findViewById(R.id.graphView);
         mUsername = headerView.findViewById(R.id.username);
         mNickname = headerView.findViewById(R.id.nickname);
 
@@ -95,6 +98,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         repoAdapter = new RepoAdapter(repositoryProjectsObjects);
         repositoryProjectsRV.setAdapter(repoAdapter);
+
+        NavGraphAsyncTask navGraphAsyncTask = new NavGraphAsyncTask();
+        navGraphAsyncTask.execute();
 
         NavHeaderAsyncTask navHeaderAsyncTask = new NavHeaderAsyncTask();
         navHeaderAsyncTask.execute();

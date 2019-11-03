@@ -40,4 +40,6 @@ dependencies {
 
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
+    implementation 'com.github.shashank1800:Graph:1.0.3'
+
 }
