@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -26,6 +27,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +36,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.shashankbhat.github.Adapter.RepoAdapter;
 import com.shashankbhat.github.AsyncTasks.NavGraphAsyncTask;
 import com.shashankbhat.github.AsyncTasks.NavHeaderAsyncTask;
@@ -41,6 +44,9 @@ import com.shashankbhat.github.AsyncTasks.RepoAsyncTask;
 import com.shashankbhat.github.Objects.RepositoryProject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import static com.shashankbhat.github.Login.sp;
 import static com.shashankbhat.github.Utils.Constants.USERNAME;
@@ -54,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private RecyclerView repositoryProjectsRV;
     private LinearLayoutManager lLayoutManager;
+    private FirebaseFirestore db;
 
     @SuppressLint("StaticFieldLeak")
     public static TextView mUsername,mNickname;
@@ -129,6 +136,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.rate_us:
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
+                break;
+            case R.id.cheat_sheet:
+                startActivity(new Intent(getApplicationContext(),CheatSheet.class));
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -182,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Snackbar.make(findViewById(R.id.linearLayout), "Please enter feedback text", Snackbar.LENGTH_SHORT).show();
                 else {
                     Snackbar.make(findViewById(R.id.linearLayout), "Thanks for your Feedback!", Snackbar.LENGTH_SHORT).show();
-                    /*String uniqueID = UUID.randomUUID().toString();
+                    String uniqueID = UUID.randomUUID().toString();
                     String feedbackText = feedback_text.getText().toString();
 
                     Map<String, Object> feedback = new HashMap<>();
@@ -192,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     db.collection("Feedback").document(uniqueID).set(feedback);
 
                     InputMethodManager keyboard = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                    keyboard.hideSoftInputFromWindow(viewGroup.getWindowToken(), 0);*/
+                    keyboard.hideSoftInputFromWindow(viewGroup.getWindowToken(), 0);
                 }
             }
         });

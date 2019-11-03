@@ -35,10 +35,20 @@ public class RepoAsyncTask extends AsyncTask<Void, Void, ArrayList<RepositoryPro
 //                System.out.println("Projects Name: " + src.select("[itemprop=name codeRepository]").text());
 //                System.out.println("Time : " + src.select("relative-time").text());
 //                System.out.println("Lang : " + src.select("[itemprop=programmingLanguage]").text());
+                String langColor = "";
+                String project_name = "";
+                String language_used = "";
+                String update_time = "";
+                try {
+                    //System.out.println("text : " + src.select("[class=repo-language-color]").attr("style").substring(18));
+                    project_name = src.select("[itemprop=name codeRepository]").text();
+                    language_used = src.select("[itemprop=programmingLanguage]").text();
+                    update_time = "Updated "+src.select("relative-time").text();
+                    langColor = src.select("[class=repo-language-color]").attr("style").substring(18);
+                }catch (Exception ie){}
 
-                repositoryProjects.add(new RepositoryProject(src.select("[itemprop=name codeRepository]").text(),
-                        src.select("[itemprop=programmingLanguage]").text(),
-                        "Updated "+src.select("relative-time").text()));
+                repositoryProjects.add(new RepositoryProject(project_name,language_used,update_time,langColor));
+
             }
 
         } catch (IOException e) {

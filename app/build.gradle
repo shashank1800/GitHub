@@ -26,7 +26,7 @@ dependencies {
 
     implementation 'com.google.android.material:material:1.2.0-alpha01'
 
-    implementation "com.squareup.okhttp3:okhttp:4.2.1"
+    //Web Scrape
     implementation "org.jsoup:jsoup:1.12.1"
 
     //Firebase
@@ -36,10 +36,11 @@ dependencies {
 
     //Async Image loader by url
     implementation 'com.github.bumptech.glide:glide:4.9.0'
-    implementation 'com.google.firebase:firebase-auth:19.1.0'
-
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
+    //1st Quadrant graph
     implementation 'com.github.shashank1800:Graph:1.0.3'
+
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 
 }

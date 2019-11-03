@@ -3,13 +3,14 @@ package com.shashankbhat.github.Adapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shashankbhat.github.Objects.RepositoryProject;
@@ -29,11 +30,13 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView project_name, language_used, updated_time;
+        CardView language_color;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             project_name = itemView.findViewById(R.id.project_name);
             language_used = itemView.findViewById(R.id.language_used);
             updated_time = itemView.findViewById(R.id.updated_time);
+            language_color = itemView.findViewById(R.id.language_color);
         }
     }
 
@@ -50,16 +53,27 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder>{
         holder.project_name.setText(repositoryProjectObjects.get(position).getProject_name());
         holder.language_used.setText(repositoryProjectObjects.get(position).getLanguage_used());
         holder.updated_time.setText(repositoryProjectObjects.get(position).getUpdated_time());
-//        if(time>200)
-//            animate(holder,time);
-//        time -= 100;
+
+        try {
+            if (!repositoryProjectObjects.get(position).getLanguage_color().isEmpty())
+                holder.language_color.setCardBackgroundColor(Color.parseColor(repositoryProjectObjects.get(position).getLanguage_color()));
+            else
+                holder.language_color.setVisibility(View.GONE);
+        }catch (Exception ie){}
+
+        if(repositoryProjectObjects.get(position).getLanguage_used().isEmpty())
+            holder.language_used.setVisibility(View.GONE);
+
+        if(time>200)
+            animate(holder,time);
+        time -= 100;
     }
 
     private void animate(RecyclerView.ViewHolder holder, int time){
 
         AnimatorSet animatorSet = new AnimatorSet();
 
-        ObjectAnimator xTranslation = ObjectAnimator.ofFloat(holder.itemView, View.TRANSLATION_Y, 1200f, 0);
+        ObjectAnimator xTranslation = ObjectAnimator.ofFloat(holder.itemView, View.TRANSLATION_Y, -1200f, 0);
         xTranslation.setDuration(time);
         ObjectAnimator alpha = ObjectAnimator.ofFloat(holder.itemView, View.ALPHA, 0, 1);
         alpha.setDuration(time);

@@ -26,13 +26,9 @@ public class NavHeaderAsyncTask extends AsyncTask<Void, Void, String[]> {
         try {
             Document doc = Jsoup.connect(url).get();
             Elements username = doc.getElementsByClass("p-name");
-//            System.out.println("text : " + username.text());
-
             Elements nickname = doc.getElementsByClass("p-nickname");
-//            System.out.println("text : " + nickname.text());
-
             Elements avatar = doc.getElementsByClass("u-photo");
-//            System.out.println("text : " + avatar.attr("href"));
+
 
             headerObject[0] = username.text();
             headerObject[1] = nickname.text();

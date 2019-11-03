@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/cheat_sheet"
+        android:icon="@drawable/ic_cheat_sheet"
+        android:title="@string/cheat_sheet"/>
+
+    <item
         android:id="@+id/nav_feedback_text"
         android:icon="@drawable/ic_feedback"
         android:title="@string/feedback" />
@@ -13,4 +18,5 @@
         android:id="@+id/nav_shareapp"
         android:icon="@drawable/ic_share"
         android:title="@string/share_app"/>
+
 </menu>

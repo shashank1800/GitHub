@@ -27,14 +27,11 @@ public class NavGraphAsyncTask extends AsyncTask<Void, Void, int[]> {
         try {
             Document doc = Jsoup.connect(url).get();
             Elements calender = doc.select("[data-count]");
-            System.out.println("text : " + calender.size());
-
             int i=1;
             for(Element e : calender) {
                 graphArray[i] = Integer.parseInt(e.attr("data-count"));
                 i++;
             }
-
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,14 +45,12 @@ public class NavGraphAsyncTask extends AsyncTask<Void, Void, int[]> {
         super.onPostExecute(graphArray);
 
         DrawGraph drawGraph = new DrawGraph();
-
-        for(int i=0;i<366;i++) {
-            System.out.println("text : " +i+graphArray[i]);
-            drawGraph.addPoint(i, graphArray[i]);
-        }
         drawGraph.setBackgroundColor("#ffffff");
         drawGraph.setLineColor("#62a970");
         drawGraph.setLineWidth(20f);
+
+        for(int i=0;i<366;i++)
+            drawGraph.addPoint(i, graphArray[i]);
 
         BitmapDrawable drawable = drawGraph.drawGraph();
         graphView.setBackground(drawable);

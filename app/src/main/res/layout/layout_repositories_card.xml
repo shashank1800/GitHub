@@ -33,18 +33,27 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_10dp"
                 android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/language_color"
+                    android:layout_gravity="center"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    app:cardCornerRadius="8dp"
+                    android:layout_marginEnd="@dimen/dimen_5dp"/>
+
                 <TextView
                     android:id="@+id/language_used"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:layout_marginEnd="@dimen/dimen_10dp"
                     android:textColor="#586069" />
 
                 <TextView
                     android:id="@+id/updated_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_10dp"
                     android:textSize="16sp"
                     android:textColor="#586069" />
 
