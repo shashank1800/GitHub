@@ -45,7 +45,6 @@ public class NavHeaderAsyncTask extends AsyncTask<Void, Void, String[]> {
             headerObject[1] = nickname.text();
             headerObject[2] = avatar.attr("href");
 
-
             //Graph
             Document document = Jsoup.connect(graphUrl).get();
             Elements calender = document.select("[data-count]");

@@ -36,6 +36,7 @@ public class ProjectView extends AppCompatActivity {
     public static ProjectViewAdapter projectViewAdapter;
     public static ArrayList<ProjectViewObject> projectViewObjects;
     public static ArrayList<Object> stack;
+    public static Button back_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class ProjectView extends AppCompatActivity {
         contributor = findViewById(R.id.contributor);
 
         share_button = findViewById(R.id.share_button);
+        back_button = findViewById(R.id.back_button);
 
         lLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
 
@@ -82,6 +84,17 @@ public class ProjectView extends AppCompatActivity {
                     intent.putExtra(Intent.EXTRA_TEXT, shareUrl);
                 } catch (ActivityNotFoundException ignored) {}
                 startActivity(intent);
+            }
+        });
+
+        back_button.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                projectViewAdapter.setRepositoryProjectObjects((ArrayList<ProjectViewObject>) stack.get(stack.size()-1));
+                stack.remove(stack.size()-1);
+                System.out.println(stack.size());
+                if(stack.size()==0) back_button.setVisibility(View.GONE);
             }
         });
     }

@@ -19,6 +19,8 @@ import com.shashankbhat.github.R;
 
 import java.util.ArrayList;
 
+import static com.shashankbhat.github.ProjectView.back_button;
+
 public class ProjectViewAdapter extends RecyclerView.Adapter<ProjectViewAdapter.ViewHolder>{
 
     private ArrayList<ProjectViewObject> projectViewObject;
@@ -42,9 +44,15 @@ public class ProjectViewAdapter extends RecyclerView.Adapter<ProjectViewAdapter.
 
         @Override
         public void onClick(View v) {
-            ProjectView.stack.add(projectViewObject);
-            ProjectViewAsyncTask projectViewAsyncTask = new ProjectViewAsyncTask();
-            projectViewAsyncTask.execute(projectViewObject.get(getAdapterPosition()).getClickUrl());
+
+            if(projectViewObject.get(getAdapterPosition()).getFile_type().equals("directory")){
+                ProjectView.back_button.setVisibility(View.VISIBLE);
+                ProjectView.stack.add(projectViewObject);
+                ProjectViewAsyncTask projectViewAsyncTask = new ProjectViewAsyncTask();
+                projectViewAsyncTask.execute(projectViewObject.get(getAdapterPosition()).getClickUrl());
+            }else{
+
+            }
         }
     }
 
