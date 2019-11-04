@@ -20,10 +20,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +36,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.shashankbhat.github.Adapter.RepoAdapter;
-import com.shashankbhat.github.AsyncTasks.NavGraphAsyncTask;
 import com.shashankbhat.github.AsyncTasks.NavHeaderAsyncTask;
 import com.shashankbhat.github.AsyncTasks.RepoAsyncTask;
 import com.shashankbhat.github.Objects.RepositoryProject;
@@ -66,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static TextView mUsername,mNickname;
     @SuppressLint("StaticFieldLeak")
     public static ImageView mAvatar;
+    public static TextView mFollowers;
+    public static TextView mFollowing;
     public static Context context;
     public static RepoAdapter repoAdapter;
     public static ArrayList<RepositoryProject> repositoryProjectsObjects;
@@ -95,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         graphView = headerView.findViewById(R.id.graphView);
         mUsername = headerView.findViewById(R.id.username);
         mNickname = headerView.findViewById(R.id.nickname);
+        mFollowers = headerView.findViewById(R.id.followers);
+        mFollowing = headerView.findViewById(R.id.following);
 
         lLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
 
@@ -105,9 +106,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         repoAdapter = new RepoAdapter(repositoryProjectsObjects);
         repositoryProjectsRV.setAdapter(repoAdapter);
-
-        NavGraphAsyncTask navGraphAsyncTask = new NavGraphAsyncTask();
-        navGraphAsyncTask.execute();
 
         NavHeaderAsyncTask navHeaderAsyncTask = new NavHeaderAsyncTask();
         navHeaderAsyncTask.execute();
@@ -211,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         builder.setView(dialogView);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
     }
 
     private void showAboutDevDialog() {

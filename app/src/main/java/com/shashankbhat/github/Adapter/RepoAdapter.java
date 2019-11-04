@@ -3,7 +3,9 @@ package com.shashankbhat.github.Adapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +16,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shashankbhat.github.Objects.RepositoryProject;
+import com.shashankbhat.github.ProjectView;
 import com.shashankbhat.github.R;
+import com.shashankbhat.github.Utils.Constants;
 
 import java.util.ArrayList;
 
@@ -28,7 +32,7 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder>{
         this.repositoryProjectObjects = repositoryProjectObjects;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView project_name, language_used, updated_time;
         CardView language_color;
         public ViewHolder(@NonNull View itemView) {
@@ -37,6 +41,16 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder>{
             language_used = itemView.findViewById(R.id.language_used);
             updated_time = itemView.findViewById(R.id.updated_time);
             language_color = itemView.findViewById(R.id.language_color);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(context, ProjectView.class);
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.PROJECT_NAME,repositoryProjectObjects.get(getLayoutPosition()).getProject_name());
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         }
     }
 
@@ -83,6 +97,8 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder>{
         animatorSet.playTogether(xTranslation,alpha,rotate);
         animatorSet.setDuration(time);
         animatorSet.start();
+
+
 
     }
 

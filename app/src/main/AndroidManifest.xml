@@ -13,8 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CheatSheet"></activity>
+
+        <activity android:name=".ProjectView"/>
+        <activity android:name=".CheatSheet" />
         <activity android:name=".Login" />
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop" />

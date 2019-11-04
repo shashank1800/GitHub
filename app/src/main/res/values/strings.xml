@@ -14,4 +14,13 @@
     <string name="submit">Submit</string>
     <string name="contribution_activity">Contribution activity</string>
     <string name="cheat_sheet">Cheat sheet</string>
+    <string name="repositories">Repositories</string>
+    <string name="following">Following</string>
+    <string name="followers">Followers</string>
+    <string name="contributors">contributors</string>
+    <string name="releases">releases</string>
+    <string name="branch">branch</string>
+    <string name="commits">commits</string>
+    <string name="help">Help</string>
+    <string name="share">Share</string>
 </resources>
