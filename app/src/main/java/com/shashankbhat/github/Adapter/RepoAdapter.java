@@ -22,6 +22,9 @@ import com.shashankbhat.github.Utils.Constants;
 
 import java.util.ArrayList;
 
+import static com.shashankbhat.github.MainActivity.repositoryProjectsRV;
+import static com.shashankbhat.github.MainActivity.spin_kit;
+
 public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder>{
 
     private ArrayList<RepositoryProject> repositoryProjectObjects;
@@ -110,5 +113,8 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder>{
     public void setRepositoryProjectObjects(ArrayList<RepositoryProject> repositoryProjects){
         this.repositoryProjectObjects = repositoryProjects;
         notifyDataSetChanged();
+
+        repositoryProjectsRV.setVisibility(View.VISIBLE);
+        spin_kit.setVisibility(View.GONE);
     }
 }

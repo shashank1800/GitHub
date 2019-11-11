@@ -7,9 +7,10 @@ android {
         applicationId "com.shashankbhat.github"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 6
-        versionName "1.5"
+        versionCode 10
+        versionName "2.0"
         multiDexEnabled true
+        ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -37,8 +38,10 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
     //1st Quadrant graph
-    implementation 'com.github.shashank1800:Graph:1.0.3'
+    implementation 'com.github.shashank1800:Graph:1.0.5'
 
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
 }

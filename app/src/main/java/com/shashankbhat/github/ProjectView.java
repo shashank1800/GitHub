@@ -1,6 +1,7 @@
 package com.shashankbhat.github;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,8 +11,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.github.ybq.android.spinkit.SpinKitView;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.shashankbhat.github.Adapter.ProjectViewAdapter;
 import com.shashankbhat.github.AsyncTasks.ProjectViewAsyncTask;
 import com.shashankbhat.github.AsyncTasks.ProjectViewHeaderAsyncTask;
@@ -30,13 +35,14 @@ public class ProjectView extends AppCompatActivity {
 
     public static Context context;
 
-    private RecyclerView projectViewRV;
+    public static RecyclerView projectViewRV;
     private LinearLayoutManager lLayoutManager;
 
     public static ProjectViewAdapter projectViewAdapter;
     public static ArrayList<ProjectViewObject> projectViewObjects;
     public static ArrayList<Object> stack;
-    public static Button back_button;
+    public static AppCompatImageButton back_button;
+    public static SpinKitView spin_kit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +61,8 @@ public class ProjectView extends AppCompatActivity {
 
         share_button = findViewById(R.id.share_button);
         back_button = findViewById(R.id.back_button);
+
+        spin_kit = findViewById(R.id.spin_kit);
 
         lLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
 

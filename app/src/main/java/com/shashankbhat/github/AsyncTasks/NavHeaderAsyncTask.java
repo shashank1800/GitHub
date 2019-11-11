@@ -70,9 +70,10 @@ public class NavHeaderAsyncTask extends AsyncTask<Void, Void, String[]> {
             MainActivity.mFollowing.setText(followersAndFollowing[4]);
 
             DrawGraph drawGraph = new DrawGraph();
-            drawGraph.setBackgroundColor("#ffffff");
+            drawGraph.setBackgroundColor("#F1F1FF");
             drawGraph.setLineColor("#18004c");
             drawGraph.setLineWidth(25f);
+            drawGraph.makeUnitLineInvisible(true);
 
             for(int i=0;i<graphArray.size();i++)
                 drawGraph.addPoint(i, graphArray.get(i));
@@ -81,7 +82,7 @@ public class NavHeaderAsyncTask extends AsyncTask<Void, Void, String[]> {
             graphView.setBackground(drawable);
         }
         catch (Exception ie){
-            Toast.makeText(MainActivity.context,"Username incorrect",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.context,"Incorrect username",Toast.LENGTH_SHORT).show();
         }
     }
 }

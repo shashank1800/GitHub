@@ -143,32 +143,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <androidx.appcompat.widget.AppCompatButton
+
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/back_button"
             android:layout_width="1dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/white"
             android:visibility="gone"
-            android:text="@string/back"/>
+            android:background="@color/colorPrimary"
+            android:src="@drawable/ic_back" />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/share_button"
             android:layout_width="1dp"
-            android:layout_weight="1"
+            android:layout_weight="6"
             android:layout_height="wrap_content"
             android:background="@color/green"
             android:textColor="@color/white"
             android:text="@string/share"/>
     </LinearLayout>
-
-
-
+    
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/projectViewRV"
         android:layout_marginTop="@dimen/dimen_10dp"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="wrap_content"/>
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="@dimen/dimen_40dp"
+        android:layout_height="@dimen/dimen_40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="80dp"
+        app:SpinKit_Color="@color/colorPrimary" />
 
 
 

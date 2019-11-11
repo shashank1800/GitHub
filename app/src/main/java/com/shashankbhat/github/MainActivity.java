@@ -32,6 +32,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private View headerView;
 
-    private RecyclerView repositoryProjectsRV;
+    public static RecyclerView repositoryProjectsRV;
     private LinearLayoutManager lLayoutManager;
     private FirebaseFirestore db;
 
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static RepoAdapter repoAdapter;
     public static ArrayList<RepositoryProject> repositoryProjectsObjects;
     public static ImageView graphView ;
+
+    public static SpinKitView spin_kit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNickname = headerView.findViewById(R.id.nickname);
         mFollowers = headerView.findViewById(R.id.followers);
         mFollowing = headerView.findViewById(R.id.following);
+
+        spin_kit = findViewById(R.id.spin_kit);
 
         lLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
 
