@@ -2,6 +2,7 @@ package com.shashankbhat.github;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,6 +52,11 @@ public class ProjectView extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String projectName = bundle.getString(Constants.PROJECT_NAME);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String urlOfThisPage = "/"+Login.sp.getString(USERNAME,"")+"/"+projectName;
 

@@ -58,7 +58,7 @@
                 android:id="@+id/branch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"
+                android:text="0"
                 android:layout_margin="@dimen/dimen_5dp"
                 android:layout_gravity="center"
                 android:textSize="16sp"
@@ -172,13 +172,11 @@
 
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/spin_kit"
-        style="@style/SpinKitView.Large.Circle"
-        android:layout_width="@dimen/dimen_40dp"
-        android:layout_height="@dimen/dimen_40dp"
+        style="@style/SpinKitView.Large.Wave"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="80dp"
         app:SpinKit_Color="@color/colorPrimary" />
-
-
 
 </LinearLayout>
