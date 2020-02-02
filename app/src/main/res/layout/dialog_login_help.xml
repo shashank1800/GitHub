@@ -18,5 +18,5 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:layout_margin="@dimen/dimen_5dp"
-        android:text="Try with name which is just below your name"/>
+        android:text="@string/username_is_the_one_which_is_just_below_your_name"/>
 </LinearLayout>

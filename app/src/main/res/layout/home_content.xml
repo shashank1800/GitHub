@@ -4,18 +4,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linearLayout"
     android:orientation="vertical"
-    android:background="@color/backgroundColor"
+    android:background="@color/dm_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include layout="@layout/toolbar_layout"/>
 
+    <LinearLayout
+        android:id="@+id/show_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_5dp"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dm_text_color"
+            android:layout_margin="@dimen/dimen_5dp"
+            android:text="Update this app now to get latest new features"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_5dp"
+            android:textAllCaps="false"
+            android:text="Download"/>
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/repositoryProjectsRV"
         android:layout_width="match_parent"
         android:visibility="gone"
         android:layout_height="wrap_content"/>
-
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,7 +46,7 @@
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:SpinKit_Color="@color/colorPrimary" />
+            app:SpinKit_Color="@color/dm_text_color" />
     </RelativeLayout>
 
 </LinearLayout>

@@ -14,20 +14,30 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".ProjectView" android:parentActivityName=".MainActivity"/>
-        <activity android:name=".CheatSheet" />
+        <activity android:name=".SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".Login" />
 
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop" />
 
-        <activity android:name=".SplashScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity
+            android:name=".ProjectView"
+            android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity" />
+
+        <activity android:name=".ViewCode"
+            android:parentActivityName=".ProjectView" />
+
+        <activity android:name=".CheatSheet" />
+
 
     </application>
 

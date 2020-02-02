@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ViewCode">
+
+    <include android:id="@+id/header" layout="@layout/toolbar_layout"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_10dp"
+        android:layout_below="@+id/header"
+        android:scrollbarSize="10dp"
+        android:orientation="vertical">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbarSize="10dp"
+            android:fillViewport="true">
+            <TextView
+                android:id="@+id/text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textSize="@dimen/dimen_16sp"
+                android:textColor="@color/black" />
+        </HorizontalScrollView>
+    </ScrollView>
+
+    <io.github.kbiakov.codeview.CodeView
+        android:id="@+id/code_view"
+        android:layout_below="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbarSize="@dimen/dimen_10dp"/>
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.Large.Wave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="80dp"
+        app:SpinKit_Color="@color/colorPrimary" />
+
+
+</RelativeLayout>

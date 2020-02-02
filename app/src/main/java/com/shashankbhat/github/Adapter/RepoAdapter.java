@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.shashankbhat.github.Login;
 import com.shashankbhat.github.Objects.RepositoryProject;
 import com.shashankbhat.github.ProjectView;
 import com.shashankbhat.github.R;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 
 import static com.shashankbhat.github.MainActivity.repositoryProjectsRV;
 import static com.shashankbhat.github.MainActivity.spin_kit;
+import static com.shashankbhat.github.Utils.Constants.USERNAME;
 
 public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder>{
 
@@ -52,6 +54,7 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder>{
             Intent intent = new Intent(context, ProjectView.class);
             Bundle bundle = new Bundle();
             bundle.putString(Constants.PROJECT_NAME,repositoryProjectObjects.get(getLayoutPosition()).getProject_name());
+            bundle.putString(Constants.USERNAME, Login.sp.getString(USERNAME,""));
             intent.putExtras(bundle);
             context.startActivity(intent);
         }
@@ -100,8 +103,6 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder>{
         animatorSet.playTogether(xTranslation,alpha,rotate);
         animatorSet.setDuration(time);
         animatorSet.start();
-
-
 
     }
 

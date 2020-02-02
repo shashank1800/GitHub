@@ -1,8 +1,10 @@
 package com.shashankbhat.github;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -16,6 +18,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -28,6 +31,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -35,6 +39,12 @@ import com.bumptech.glide.request.RequestOptions;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.shashankbhat.github.Adapter.RepoAdapter;
 import com.shashankbhat.github.AsyncTasks.NavHeaderAsyncTask;
@@ -72,6 +82,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static ImageView graphView ;
 
     public static SpinKitView spin_kit;
+
+
+    public static int MY_REQUEST_CODE = 110;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,10 +131,46 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         RepoAsyncTask repoAsyncTask = new RepoAsyncTask();
         repoAsyncTask.execute();
 
+        checkForInAppUpdate();
+
+    }
+
+    private void checkForInAppUpdate() {
+        AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(context);
+
+        // Returns an intent object that you use to check for an update.
+        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+
+        // Checks that the platform will allow the specified type of update.
+        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                    // For a flexible update, use AppUpdateType.FLEXIBLE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+
+
+                // Request the update.
+                LinearLayout show_update = findViewById(R.id.show_update);
+                show_update.setVisibility(View.VISIBLE);
+
+                AppCompatButton update = findViewById(R.id.update);
+
+                update.setOnClickListener(v->{
+                    try {
+                        appUpdateManager.startUpdateFlowForResult(appUpdateInfo,AppUpdateType.IMMEDIATE,this,MY_REQUEST_CODE);
+                    } catch (IntentSender.SendIntentException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+            }
+        });
+
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        Intent intent;
 
         int id = item.getItemId();
         switch (id){
@@ -129,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 showFeedbackDialog();
                 break;
             case R.id.nav_shareapp:
-                Intent intent = new Intent();
+                intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 try {
@@ -140,9 +189,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.rate_us:
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
                 break;
-            case R.id.cheat_sheet:
+            /*case R.id.cheat_sheet:
                 startActivity(new Intent(getApplicationContext(),CheatSheet.class));
                 break;
+            case R.id.view_page:
+                intent = new Intent(context, ProjectView.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(USERNAME,"vtucs");
+                bundle.putString(PROJECT_NAME,"Machine_Learning_Laboratory");
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;*/
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -293,5 +350,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == MY_REQUEST_CODE) {
+            if (resultCode != RESULT_OK) {
+                System.out.println("Update flow failed! Result code: " + resultCode);
+                // If the update is cancelled or fails,
+                // you can request to start the update again.
+            }else{
+                System.out.println("Updated: " + resultCode);
+            }
+        }
+
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GitHub</string>
+    <string name="app_name">GitHub Repositories</string>
 
     <string name="nav_open">Open Navigation Drawer</string>
     <string name="nav_close">Close Navigation Drawer</string>
@@ -14,7 +14,6 @@
     <string name="submit">Submit</string>
     <string name="contribution_activity">Contribution activity</string>
     <string name="cheat_sheet">Cheat sheet</string>
-    <string name="repositories">Repositories</string>
     <string name="following">Following</string>
     <string name="followers">Followers</string>
     <string name="contributors">contributors</string>
@@ -23,5 +22,5 @@
     <string name="commits">commits</string>
     <string name="help">Help</string>
     <string name="share">Share</string>
-    <string name="back">Back</string>
+    <string name="username_is_the_one_which_is_just_below_your_name">Username is the one which is just below your name</string>
 </resources>

@@ -3,7 +3,6 @@ package com.shashankbhat.github;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.github.ybq.android.spinkit.SpinKitView;
+import com.shashankbhat.github.AsyncTasks.LoginUsernameAsyncTask;
+
 import static com.shashankbhat.github.Utils.Constants.SHARED_PREF_NAME;
 import static com.shashankbhat.github.Utils.Constants.USERNAME;
 
@@ -24,6 +26,7 @@ public class Login extends AppCompatActivity {
     private Button mSubmitButton,mHelp;
     public static SharedPreferences sp;
     private Context context;
+    private SpinKitView spinKitView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class Login extends AppCompatActivity {
         mUsername = findViewById(R.id.username);
         mSubmitButton = findViewById(R.id.submit);
         mHelp = findViewById(R.id.help);
+        spinKitView = findViewById(R.id.spin_kit);
 
         sp = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
@@ -46,17 +50,14 @@ public class Login extends AppCompatActivity {
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = sp.edit();
+                spinKitView.setVisibility(View.VISIBLE);
                 if(mUsername.getText().toString().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Enter your github username", Toast.LENGTH_SHORT).show();
                     showAboutDevDialog();
                 }
                 else{
-                    editor.putString(USERNAME, mUsername.getText().toString());
-                    editor.apply();
-                    editor.commit();
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                    finish();
+                    LoginUsernameAsyncTask loginUsernameAsyncTask = new LoginUsernameAsyncTask(context,mUsername.getText().toString(),spinKitView);
+                    loginUsernameAsyncTask.execute();
                 }
 
             }

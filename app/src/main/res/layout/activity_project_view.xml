@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/backgroundColor"
     tools:context=".ProjectView">
 
     <include layout="@layout/toolbar_layout"/>
@@ -41,7 +42,7 @@
                 android:layout_gravity="center"
                 android:textSize="16sp"
                 android:text="@string/commits"
-                android:textColor="#586069"/>
+                android:textColor="@color/projectViewTextColor"/>
         </LinearLayout>
 
         <LinearLayout
@@ -70,7 +71,7 @@
                 android:layout_gravity="center"
                 android:textSize="16sp"
                 android:text="@string/branch"
-                android:textColor="#586069"/>
+                android:textColor="@color/projectViewTextColor"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -105,7 +106,7 @@
                 android:layout_gravity="center"
                 android:textSize="16sp"
                 android:text="@string/releases"
-                android:textColor="#586069"/>
+                android:textColor="@color/projectViewTextColor"/>
         </LinearLayout>
 
         <LinearLayout
@@ -134,7 +135,7 @@
                 android:layout_gravity="center"
                 android:textSize="16sp"
                 android:text="@string/contributors"
-                android:textColor="#586069"/>
+                android:textColor="@color/projectViewTextColor"/>
         </LinearLayout>
 
     </LinearLayout>

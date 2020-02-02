@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
+    android:background="@color/dm_background"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".SplashScreen">
 
     <ImageView
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:src="@drawable/ic_launcher_foreground"/>
 
     <TextView
@@ -20,7 +20,8 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:fontFamily="sans-serif-medium"
-        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:textColor="@color/dm_text_color"
         android:text="@string/app_name"/>
 
 </LinearLayout>

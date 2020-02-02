@@ -81,8 +81,6 @@ public class NavHeaderAsyncTask extends AsyncTask<Void, Void, String[]> {
             BitmapDrawable drawable = drawGraph.drawGraph();
             graphView.setBackground(drawable);
         }
-        catch (Exception ie){
-            Toast.makeText(MainActivity.context,"Incorrect username",Toast.LENGTH_SHORT).show();
-        }
+        catch (Exception ie){ }
     }
 }

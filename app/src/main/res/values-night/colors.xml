@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#24292e</color>
-    <color name="colorPrimaryDark">#050505</color>
+    <color name="colorPrimary">#050505</color>
+    <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#667a14</color>
     <color name="white">#fcfcfc</color>
     <color name="green">#64CE77</color>
@@ -10,8 +10,8 @@
 
     <color name="projectViewTextColor">#586069</color>
 
-    <color name="dm_background">#F1F1FF</color>
-    <color name="dm_text_color">#24292e</color>
-    <color name="dm_card_color">#F2FFF2</color>
+    <color name="dm_background">#24292e</color>
+    <color name="dm_text_color">#F1F1FF</color>
+    <color name="dm_card_color">#E0E0EC</color>
 
 </resources>

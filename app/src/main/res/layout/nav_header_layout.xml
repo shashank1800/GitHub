@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_10dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/ic_launcher_background"/>
+                android:src="@drawable/ic_launcher_foreground"/>
             <TextView
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
@@ -58,6 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_10dp"
+                    android:layout_marginTop="@dimen/dimen_5dp"
                     android:layout_marginEnd="@dimen/dimen_10dp"
                     android:layout_marginBottom="@dimen/dimen_5dp"
                     android:gravity="center"
@@ -93,6 +94,7 @@
                     android:layout_marginStart="@dimen/dimen_10dp"
                     android:layout_marginEnd="@dimen/dimen_10dp"
                     android:layout_marginBottom="@dimen/dimen_5dp"
+                    android:layout_marginTop="@dimen/dimen_5dp"
                     android:gravity="center"
                     android:orientation="vertical">
                     <TextView
@@ -139,5 +141,137 @@
             android:orientation="vertical"
             android:adjustViewBounds="true"/>
     </LinearLayout>
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/dimen_10dp"
+            style="@style/CardView">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_5dp"
+                android:layout_marginBottom="@dimen/dimen_5dp"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dimen_5dp"
+                    android:tint="@color/colorAccent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_cheat_sheet"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_20dp"
+                    android:layout_marginTop="@dimen/dimen_5dp"
+                    android:layout_marginEnd="@dimen/dimen_5dp"
+                    android:layout_marginBottom="@dimen/dimen_5dp"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/dimen_16sp"
+                    android:text="@string/cheat_sheet" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_5dp"
+                android:layout_marginBottom="@dimen/dimen_5dp"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dimen_5dp"
+                    android:tint="@color/colorAccent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_feedback"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_20dp"
+                    android:layout_marginTop="@dimen/dimen_5dp"
+                    android:layout_marginEnd="@dimen/dimen_5dp"
+                    android:layout_marginBottom="@dimen/dimen_5dp"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/dimen_16sp"
+                    android:text="@string/feedback" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_5dp"
+                android:layout_marginBottom="@dimen/dimen_5dp"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dimen_5dp"
+                    android:tint="@color/colorAccent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_rate_us"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_20dp"
+                    android:layout_marginTop="@dimen/dimen_5dp"
+                    android:layout_marginEnd="@dimen/dimen_5dp"
+                    android:layout_marginBottom="@dimen/dimen_5dp"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/dimen_16sp"
+                    android:text="@string/rate_us" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_5dp"
+                android:layout_marginBottom="@dimen/dimen_5dp"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dimen_5dp"
+                    android:tint="@color/colorAccent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_share"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_20dp"
+                    android:layout_marginTop="@dimen/dimen_5dp"
+                    android:layout_marginEnd="@dimen/dimen_5dp"
+                    android:layout_marginBottom="@dimen/dimen_5dp"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/dimen_16sp"
+                    android:text="@string/share_app" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>-->
 
 </LinearLayout>

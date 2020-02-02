@@ -1,6 +1,8 @@
 package com.shashankbhat.github.AsyncTasks;
 
 import android.os.AsyncTask;
+
+import com.shashankbhat.github.Adapter.ProjectViewAdapter;
 import com.shashankbhat.github.Objects.ProjectViewObject;
 import com.shashankbhat.github.ProjectView;
 
@@ -16,6 +18,11 @@ public class ProjectViewAsyncTask extends AsyncTask<String, Void,Void> {
 
     private ArrayList<ProjectViewObject> projectViewObjects;
     public static String url;
+    private ProjectViewAdapter projectViewAdapter;
+
+    public ProjectViewAsyncTask(ProjectViewAdapter projectViewAdapter){
+        this.projectViewAdapter = projectViewAdapter;
+    }
 
     @Override
     protected Void doInBackground(String... strings) {
@@ -50,6 +57,6 @@ public class ProjectViewAsyncTask extends AsyncTask<String, Void,Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        ProjectView.projectViewAdapter.setRepositoryProjectObjects(projectViewObjects);
+        projectViewAdapter.setRepositoryProjectObjects(projectViewObjects);
     }
 }

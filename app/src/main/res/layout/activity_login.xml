@@ -1,58 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Login">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinator_layout">
 
-    <include layout="@layout/toolbar_layout"/>
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:layout_height="wrap_content">
+        tools:context=".Login">
+
+        <include layout="@layout/toolbar_layout" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_10dp"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_contributor"/>
-            <EditText
-                android:id="@+id/username"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_10dp"
-                android:hint="@string/username"/>
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_contributor" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/username"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="@string/login"
+                android:textColor="@color/white" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/submit"
+            android:id="@+id/help"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/dimen_10dp"
+            android:background="@color/backgroundColor"
+            android:text="@string/help"
+            android:textColor="@color/black" />
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/spin_kit"
+            style="@style/SpinKitView.Large.Pulse"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/white"
-            android:text="@string/login"/>
-    </LinearLayout>
+            app:SpinKit_Color="@color/colorPrimary" />
 
-    <Button
-        android:id="@+id/help"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/dimen_10dp"
-        android:textColor="@color/black"
-        android:background="@color/backgroundColor"
-        android:text="@string/help"/>
+    </RelativeLayout>
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

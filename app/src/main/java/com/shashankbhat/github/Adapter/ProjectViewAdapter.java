@@ -1,8 +1,8 @@
 package com.shashankbhat.github.Adapter;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,24 +12,32 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.shashankbhat.github.AsyncTasks.ProjectViewAsyncTask;
 import com.shashankbhat.github.Objects.ProjectViewObject;
 import com.shashankbhat.github.ProjectView;
 import com.shashankbhat.github.R;
+import com.shashankbhat.github.Utils.Constants;
+import com.shashankbhat.github.ViewCode;
 
 import java.util.ArrayList;
+import static com.shashankbhat.github.Utils.Constants.listOfFileType;
 
-import static com.shashankbhat.github.ProjectView.projectViewRV;
-import static com.shashankbhat.github.ProjectView.spin_kit;
 
 
 public class ProjectViewAdapter extends RecyclerView.Adapter<ProjectViewAdapter.ViewHolder>{
 
     private ArrayList<ProjectViewObject> projectViewObject;
     private Context context;
+    public SpinKitView spin_kit;
+    public RecyclerView projectViewRV;
+    private ProjectViewAdapter projectViewAdapter;
 
-    public ProjectViewAdapter(ArrayList<ProjectViewObject> projectViewObject) {
+    public ProjectViewAdapter(ArrayList<ProjectViewObject> projectViewObject,RecyclerView recyclerView,SpinKitView spin_kit) {
         this.projectViewObject = projectViewObject;
+        this.projectViewRV = recyclerView;
+        this.spin_kit = spin_kit;
+        projectViewAdapter = this;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -53,10 +61,24 @@ public class ProjectViewAdapter extends RecyclerView.Adapter<ProjectViewAdapter.
 
                 ProjectView.back_button.setVisibility(View.VISIBLE);
                 ProjectView.stack.add(projectViewObject);
-                ProjectViewAsyncTask projectViewAsyncTask = new ProjectViewAsyncTask();
+                ProjectViewAsyncTask projectViewAsyncTask = new ProjectViewAsyncTask(projectViewAdapter);
                 projectViewAsyncTask.execute(projectViewObject.get(getAdapterPosition()).getClickUrl());
             }else{
+                String filename = projectViewObject.get(getAdapterPosition()).getFilename();
 
+                boolean isTextFormat = false;
+                for(String filetype : listOfFileType)
+                    if(filename.endsWith(filetype)){
+                        isTextFormat = true;
+                        break;
+                    }
+                if(isTextFormat){
+                    Intent intent = new Intent(context, ViewCode.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constants.FILE_URL,projectViewObject.get(getAdapterPosition()).getClickUrl());
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }
             }
         }
     }
