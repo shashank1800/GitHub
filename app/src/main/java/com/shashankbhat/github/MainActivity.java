@@ -1,17 +1,5 @@
 package com.shashankbhat.github;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -33,7 +21,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.ybq.android.spinkit.SpinKitView;
@@ -46,10 +49,16 @@ import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 import com.shashankbhat.github.Adapter.RepoAdapter;
+import com.shashankbhat.github.Api.VolleyRequestQueue;
 import com.shashankbhat.github.AsyncTasks.NavHeaderAsyncTask;
-import com.shashankbhat.github.AsyncTasks.RepoAsyncTask;
+import com.shashankbhat.github.Objects.GithubUser;
 import com.shashankbhat.github.Objects.RepositoryProject;
+import com.shashankbhat.github.Utils.Constants;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,6 +66,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static com.shashankbhat.github.Login.sp;
+import static com.shashankbhat.github.Utils.Constants.GITHUB_USER;
 import static com.shashankbhat.github.Utils.Constants.USERNAME;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -70,20 +80,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private LinearLayoutManager lLayoutManager;
     private FirebaseFirestore db;
 
-    @SuppressLint("StaticFieldLeak")
-    public static TextView mUsername,mNickname;
-    @SuppressLint("StaticFieldLeak")
-    public static ImageView mAvatar;
-    public static TextView mFollowers;
-    public static TextView mFollowing;
+    public TextView mUsername, mNickname;
+    public ImageView mAvatar;
+    public TextView mFollowers;
+    public TextView mFollowing;
     public static Context context;
     public static RepoAdapter repoAdapter;
     public static ArrayList<RepositoryProject> repositoryProjectsObjects;
-    public static ImageView graphView ;
-
+    public static ImageView graphView;
     public static SpinKitView spin_kit;
-
-
     public static int MY_REQUEST_CODE = 110;
 
     @Override
@@ -125,13 +130,57 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         repoAdapter = new RepoAdapter(repositoryProjectsObjects);
         repositoryProjectsRV.setAdapter(repoAdapter);
 
+        initializeHomePageContent();
+
         NavHeaderAsyncTask navHeaderAsyncTask = new NavHeaderAsyncTask();
         navHeaderAsyncTask.execute();
 
-        RepoAsyncTask repoAsyncTask = new RepoAsyncTask();
-        repoAsyncTask.execute();
-
+        displayRepositories();
         checkForInAppUpdate();
+
+    }
+
+    private void displayRepositories() {
+        String url = "https://api.github.com/users/" + sp.getString(USERNAME, "") + "/repos";
+        RequestQueue queue = VolleyRequestQueue.getInstance(context);
+
+        ArrayList<RepositoryProject> repositoryProjects = new ArrayList<>();
+        JsonArrayRequest githubRepoRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, response -> {
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject repo = response.getJSONObject(i);
+
+                            String project_name = repo.getString("name");
+                            String language_used = repo.getString("language");
+                            String updated_time = repo.getString("updated_at").substring(0,10);
+                            String language_color = Constants.colors.get(language_used);
+
+                            repositoryProjects.add(new RepositoryProject(project_name, language_used, updated_time, language_color));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    repoAdapter.setRepositoryProjectObjects(repositoryProjects);
+                }, error -> {
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+
+        queue.add(githubRepoRequest);
+    }
+
+    private void initializeHomePageContent() {
+        Gson gson = new Gson();
+        String json = sp.getString(GITHUB_USER, "");
+        GithubUser githubUser = gson.fromJson(json, GithubUser.class);
+
+        mUsername.setText(githubUser.getUsername());
+        mNickname.setText(githubUser.getName());
+        mFollowers.setText(String.valueOf(githubUser.getFollowers()));
+        mFollowing.setText(String.valueOf(githubUser.getFollowing()));
+
+        Glide.with(MainActivity.context).load(githubUser.getAvatarUrl()).into(mAvatar);
 
     }
 
@@ -154,9 +203,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 AppCompatButton update = findViewById(R.id.update);
 
-                update.setOnClickListener(v->{
+                update.setOnClickListener(v -> {
                     try {
-                        appUpdateManager.startUpdateFlowForResult(appUpdateInfo,AppUpdateType.IMMEDIATE,this,MY_REQUEST_CODE);
+                        appUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.IMMEDIATE, this, MY_REQUEST_CODE);
                     } catch (IntentSender.SendIntentException e) {
                         e.printStackTrace();
                     }
@@ -173,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent;
 
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.nav_feedback_text:
                 showFeedbackDialog();
                 break;
@@ -183,7 +232,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent.setType("text/plain");
                 try {
                     intent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=" + getPackageName());
-                } catch (ActivityNotFoundException ignored) { }
+                } catch (ActivityNotFoundException ignored) {
+                }
                 startActivity(intent);
                 break;
             case R.id.rate_us:
@@ -217,19 +267,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.main_menu,menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.logout:
                 SharedPreferences.Editor editor = sp.edit();
-                editor.putString(USERNAME,"");
+                editor.putString(USERNAME, "");
                 editor.apply();
                 editor.commit();
-                startActivity(new Intent(getApplicationContext(),Login.class));
+                startActivity(new Intent(getApplicationContext(), Login.class));
                 finish();
                 break;
             case R.id.nav_about:
@@ -249,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 EditText feedback_text = dialogView.findViewById(R.id.feedback_text);
-                if(feedback_text.getText().toString().compareTo("")==0)
+                if (feedback_text.getText().toString().compareTo("") == 0)
                     Snackbar.make(findViewById(R.id.linearLayout), "Please enter feedback text", Snackbar.LENGTH_SHORT).show();
                 else {
                     Snackbar.make(findViewById(R.id.linearLayout), "Thanks for your Feedback!", Snackbar.LENGTH_SHORT).show();
@@ -292,8 +342,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dialogView.findViewById(R.id.fb).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String urlFb="https://www.facebook.com/shashankbhat114";
-                String appFb="fb://facewebmodal/f?href="+urlFb;
+                String urlFb = "https://www.facebook.com/shashankbhat114";
+                String appFb = "fb://facewebmodal/f?href=" + urlFb;
 
                 try {
                     if (isAppInstalled(context, "com.facebook.orca") || isAppInstalled(context, "com.facebook.katana")
@@ -302,22 +352,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     } else {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlFb)));
                     }
-                }catch (Exception e){e.printStackTrace();}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         dialogView.findViewById(R.id.ln).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String urlLn="https://www.linkedin.com/in/shashank-bhat-924b1bb9/";
+                String urlLn = "https://www.linkedin.com/in/shashank-bhat-924b1bb9/";
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(urlLn));
                     intent.setPackage("com.linkedin.android");
                     startActivity(intent);
-                }
-                catch (ActivityNotFoundException anfe)
-                {
+                } catch (ActivityNotFoundException anfe) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlLn)));
                 }
 
@@ -327,22 +377,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dialogView.findViewById(R.id.insta).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String appIs="http://instagram.com/shashank_bhat__";
-                String urlIs="http://instagram.com/_u/shashank_bhat__";
+                String appIs = "http://instagram.com/shashank_bhat__";
+                String urlIs = "http://instagram.com/_u/shashank_bhat__";
 
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(appIs));
                     intent.setPackage("com.instagram.android");
                     startActivity(intent);
-                }
-                catch (ActivityNotFoundException anfe)
-                {
+                } catch (ActivityNotFoundException anfe) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlIs)));
                 }
             }
         });
     }
+
     public static boolean isAppInstalled(Context context, String packageName) {
         try {
             context.getPackageManager().getApplicationInfo(packageName, 0);
@@ -361,7 +410,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 System.out.println("Update flow failed! Result code: " + resultCode);
                 // If the update is cancelled or fails,
                 // you can request to start the update again.
-            }else{
+            } else {
                 System.out.println("Updated: " + resultCode);
             }
         }

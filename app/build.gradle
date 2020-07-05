@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.shashankbhat.github"
         minSdkVersion 23
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 17
         versionName "2.2.6"
         multiDexEnabled true
@@ -29,17 +29,19 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.2.0-alpha03'
+    implementation 'com.google.android.material:material:1.3.0-alpha01'
 
     //Web Scrape
     implementation "org.jsoup:jsoup:1.12.1"
 
+    implementation 'com.google.code.gson:gson:2.8.6'
+
     //Firebase
-    implementation 'com.google.firebase:firebase-firestore:21.3.1'
+    implementation 'com.google.firebase:firebase-firestore:21.4.3'
 
     //Async Image loader by url
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     //1st Quadrant graph
     implementation 'com.github.shashank1800:Graph:1.0.5'
@@ -48,8 +50,7 @@ dependencies {
 
     implementation 'com.github.kbiakov:CodeView-Android:1.3.2'
 
+    implementation 'com.google.android.play:core:1.7.3'
 
-    implementation 'com.google.android.play:core:1.6.4'
-
-
+    implementation 'com.android.volley:volley:1.1.1'
 }

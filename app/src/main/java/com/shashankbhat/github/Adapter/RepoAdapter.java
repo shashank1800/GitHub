@@ -71,18 +71,15 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.project_name.setText(repositoryProjectObjects.get(position).getProject_name());
-        holder.language_used.setText(repositoryProjectObjects.get(position).getLanguage_used());
-        holder.updated_time.setText(repositoryProjectObjects.get(position).getUpdated_time());
-
-        try {
-            if (!repositoryProjectObjects.get(position).getLanguage_color().isEmpty())
-                holder.language_color.setCardBackgroundColor(Color.parseColor(repositoryProjectObjects.get(position).getLanguage_color()));
-            else
-                holder.language_color.setVisibility(View.GONE);
-        }catch (Exception ie){}
-
-        if(repositoryProjectObjects.get(position).getLanguage_used().isEmpty())
+        if(!repositoryProjectObjects.get(position).getLanguage_used().equals("null"))
+            holder.language_used.setText(repositoryProjectObjects.get(position).getLanguage_used());
+        else
             holder.language_used.setVisibility(View.GONE);
+        holder.updated_time.setText(repositoryProjectObjects.get(position).getUpdated_time());
+        if(repositoryProjectObjects.get(position).getLanguage_color()!=null)
+            holder.language_color.setCardBackgroundColor(Color.parseColor(repositoryProjectObjects.get(position).getLanguage_color()));
+        else
+            holder.language_color.setVisibility(View.GONE);
 
         if(time>200)
             animate(holder,time);
